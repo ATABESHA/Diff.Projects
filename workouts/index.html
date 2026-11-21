@@ -45,8 +45,8 @@ h1{font-size:34px;font-weight:700;letter-spacing:.3px;margin:6px 0 4px}
 .list{display:flex;flex-direction:column;gap:10px}
 .wk{display:flex;align-items:center;gap:12px;background:var(--card);border-radius:var(--r);padding:10px;position:relative}
 .wk:active{background:var(--card2)}
-.thumb{width:64px;height:64px;border-radius:12px;flex:none;overflow:hidden;background:var(--card2);display:grid;place-items:center;font-size:26px;font-weight:700;color:var(--ink2)}
-.thumb img{width:100%;height:100%;object-fit:cover}
+.thumb{position:relative;width:64px;height:64px;border-radius:12px;flex:none;overflow:hidden;background:var(--card2);display:grid;place-items:center;font-size:26px;font-weight:700;color:var(--ink2)}
+.thumb img{position:absolute;inset:0;width:100%;height:100%;object-fit:contain;object-position:center;display:block}
 .wk .info{flex:1;min-width:0}
 .wk .name{font-weight:600;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
 .wk .meta{color:var(--ink2);font-size:14px;margin-top:2px}
@@ -63,7 +63,8 @@ body.show-detail #btnAddWorkout{display:none}
 
 /* ---------- detail ---------- */
 .hero{border-radius:var(--r);overflow:hidden;background:var(--card);aspect-ratio:16/10;display:grid;place-items:center;margin:4px 0 14px;position:relative}
-.hero img{width:100%;height:100%;object-fit:contain;background:#111}
+.hero img{position:absolute;inset:0;width:100%;height:100%;object-fit:contain;object-position:center;display:block}
+.hero img.bg{object-fit:cover;filter:blur(24px) brightness(.55);transform:scale(1.2)}
 .hero .ph{color:var(--ink3);text-align:center;font-size:15px}
 .hero .ph .big{font-size:60px;font-weight:700;color:var(--ink2)}
 .stats{display:grid;grid-template-columns:repeat(3,1fr);gap:8px;margin-bottom:14px}
@@ -551,7 +552,7 @@ function renderDetail(){
   const w=workouts.find(x=>x.id===current); if(!w) return;
   $('dName').textContent=w.name;
   const src=gifSrc(w);
-  $('dHero').innerHTML=src?`<img src="${esc(src)}" alt="${esc(w.name)}">`
+  $('dHero').innerHTML=src?`<img class="bg" src="${esc(src)}" alt="" aria-hidden="true"><img src="${esc(src)}" alt="${esc(w.name)}">`
     :`<div class="ph"><div class="big">${esc((w.name[0]||'?').toUpperCase())}</div>Tap Edit to add a GIF</div>`;
 
   const now=new Date(), mine=entries.filter(e=>e.wid===w.id);

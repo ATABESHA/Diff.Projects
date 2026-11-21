@@ -1,5 +1,5 @@
 // Bump VERSION whenever you change files so phones pick up the update.
-const VERSION = 'workouts-v1';
+const VERSION = 'workouts-v2';
 const FILES = ['./', './index.html', './manifest.json',
   './icons/icon-180.png', './icons/icon-192.png', './icons/icon-512.png'];
 
